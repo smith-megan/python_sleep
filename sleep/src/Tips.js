@@ -1,11 +1,10 @@
 import React,{useState, useEffect} from 'react'
-import Tips from Tips
 
-function App() {
+function Tips() {
   const[data, setData]=useState([{}])
 
   useEffect(()=>{
-    fetch("/members").then(
+    fetch("/favorites").then(
       res=>res.json()
     ).then(data => {
       setData(data)
@@ -26,4 +25,4 @@ function App() {
   )
 }
 
-export default App
+export default Tips
