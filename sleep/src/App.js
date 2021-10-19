@@ -1,5 +1,6 @@
 import React,{useState, useEffect} from 'react'
-import Tips from Tips
+import Graph from './Graph.js'
+import Tips from './Tips.js'
 
 function App() {
   const[data, setData]=useState([{}])
@@ -15,6 +16,7 @@ function App() {
   
   return (
     <div>
+      <Graph />
       {(typeof data.members === 'undefined') ? (
         <p>Loading...</p>
       ) : (
