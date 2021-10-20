@@ -36,6 +36,6 @@ create table user(
   "username" VARCHAR(40),
   "password" VARCHAR(40),
   "email" VARCHAR(40),
-  "zipcode" INT not null,
+  "city" VARCHAR(100),
   "birthday" date
 );
