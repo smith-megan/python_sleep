@@ -1,6 +1,5 @@
-from flask import Flask, render_template;
+from flask import Flask, render_template, json, request;
 from flask_sqlalchemy import SQLAlchemy;
-# import psycopg2;
 
 app=Flask(__name__)
 db=SQLAlchemy(app)
@@ -103,12 +102,14 @@ class User(db.Model):
 def members():
   return{"members":["member1","member2","member3"]}
 
-@app.route("/monday")
-def monday():
-  note=Notes(user_id=2,week_id=2, note="oh no I've made it better?")
+@app.route("/notes", methods=["POST"])
+def day():
+  noted=(json.loads(request.data))
+  print(noted["note"])
+  note=Notes(user_id=3,week_id=3, note=noted["note"])
   db.session.add(note)
   db.session.commit()
-  return{"monday":"monday"}
+  return{"response":"note saved"}
 
 if __name__=="__main__":
   connect_to_db(app)
