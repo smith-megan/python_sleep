@@ -1,0 +1,20 @@
+.home{
+  display: grid;
+  grid-template-columns: 1fr;
+  background: url("./Assets/covers.jpg") no-repeat center / cover;
+  height: 100vh;
+  align-content: center;
+}
+
+.title {
+  font-size: 4rem;
+  color: #A51C25;
+}
+
+.home-btn {
+  font-size: 2rem;
+  align-self: center;
+  justify-self: center;
+  width: 15%;
+  height: 70px;
+}

@@ -1,4 +1,6 @@
 import React,{useState, useEffect} from 'react'
+import './graph.css';
+import {Line} from 'react-chartjs-2';
 
 function Graph() {
 
@@ -20,31 +22,78 @@ function Graph() {
       console.log(note)
     })
   }
-  
 
+  const [chartData, setChartData]=useState({})
+
+  const chart=()=>{
+    setChartData({
+      labels:['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
+      datasets: [
+        {
+          label: 'Low Healthy Baseline',
+          data: [6,6,6,6,6,6,6],
+          backgroundColor: [
+            'rgb(167,25,22,.7)'
+          ],
+          borderWidth: 2,
+          fill: '+1'
+        },
+        {
+          label: 'High Healthy Baseline',
+          data: [9,9,9,9,9,9,9],
+          backgroundColor: [
+            'rgb(167,25,22,100)'
+          ],
+          borderWidth: 2,
+        },
+        
+      ]
+    })
+  }
+
+  useEffect(()=>{
+    chart()
+  }, [])
   return (
     <div>
       <div className="graph">
         <div className="left-arrow"></div>
-        <div className="graph-image"></div>
+        <div className="graph-image">
+          <Line data={chartData} options={{
+            // responsive: true,
+            scales: {
+              yAxes: [
+                {
+                  ticks: {
+                    min: 0,
+                    // autoSkip: true,
+                    // maxTicksLimit: 24,
+                    beginAtZero: true
+                  },
+                  gridLines: {display: false}
+                }
+              ]
+            }}}/>
+        </div>
         <div className="right-arrow"></div>
       </div>
       <div className="data">
-        <div className="Date">
-          <p>"dayofweek"</p>
-          <p>"dateofweek"</p>
-        </div>
-        <div>
-          <p>Wake up</p>
-          <p>Sleep</p>
-        </div>
-        <div>
-          <input></input>
-          <input></input>
-          <button>^</button>
+        <div className="graph-updates">
+          <div>
+            <p>Wake up</p>
+            <p>Sleep</p>
+          </div>
+          <div>
+            <p>"dateofweek"</p>
+            <p>"dayofweek"</p>
+            <input></input>
+            <input></input>
+            <button>^</button>
+          </div>
         </div>
       </div>
       <div className="note">
+        <h2>Notes:</h2>
         <form onSubmit={saveNote}>
           <label>
           <input type="text" name="note"></input>

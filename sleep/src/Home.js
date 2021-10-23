@@ -1,4 +1,5 @@
 import React,{useState, useEffect} from 'react'
+import "./home.css"
 
 function Home() {
   const[data, setData]=useState([{}])
@@ -6,9 +7,8 @@ function Home() {
   return (
     <div className="home">
   {/* nav? */}
-      <h1>Sleep Guide Central</h1>
+      <h1 className="title">Sleep Guide Central</h1>
       <button className="home-btn">login</button>
-
     </div>
   )
 }

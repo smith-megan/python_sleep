@@ -1,7 +1,8 @@
 import React,{useState, useEffect} from 'react'
 import Graph from './Graph/Graph.js'
-import Tips from './Tips.js'
+// import Tips from './Tips.js'
 import Home from './Home.js'
+import "./App.css"
 
 function App() {
   const[data, setData]=useState([{}])
@@ -16,7 +17,7 @@ function App() {
   }, [])
   
   return (
-    <div>
+    <div className="App">
       <Home/>
       {/* <Nav /> */}
       <Graph />

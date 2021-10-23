@@ -1,0 +1,33 @@
+.graph {
+  border: 2px solid black;
+  display: grid;
+  width: 100%;
+  grid-template-columns: .1fr .8fr .1fr;
+}
+.left-arrow{
+  height: 100px;
+  width: 100%;
+  background-color: blue;
+}
+.right-arrow{
+  height: 100px;
+  width: 100%;
+  background-color: blue;
+}
+.graph-image{
+  /* height: 350px; */
+  width: 50%;
+}
+.graph-updates{
+  display: flex;
+  border: 2px solid yellow;
+}
+.data{
+  border: 2px solid pink;
+}
+.date{
+  border: 2px solid purple;
+}
+.note{
+  border: 2px solid green;
+}
