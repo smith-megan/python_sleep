@@ -1,0 +1,35 @@
+.nav{
+  height: 8vh;
+}
+.logo{
+  background: url("../Assets/logo.png") no-repeat center / contain;
+  width: 100%;
+  height: 75%;
+}
+
+.logo-div{
+  display: grid;
+  grid-template-columns: 7% 13% 50% 30%;
+  width: 100%;
+  justify-items: center;
+  align-items: center;
+  /* padding: 20px; */
+  /* align-items: flex-start; */
+}
+
+.logo-title{
+  font-size: 1.5rem;
+  color: #A7543F;
+  justify-self: left;
+}
+.nav-links {
+  width: 100%;
+  align-self: center;
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+}
+
+.nav-links > a {
+  color: #A7543F;
+  text-decoration: none;
+}

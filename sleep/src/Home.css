@@ -2,13 +2,13 @@
   display: grid;
   grid-template-columns: 1fr;
   background: url("./Assets/covers.jpg") no-repeat center / cover;
-  height: 100vh;
+  height: 90vh;
   align-content: center;
 }
 
 .title {
   font-size: 4rem;
-  color: #A51C25;
+  color: #A7543F;
 }
 
 .home-btn {

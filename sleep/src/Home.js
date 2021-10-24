@@ -7,7 +7,7 @@ function Home() {
   return (
     <div className="home">
   {/* nav? */}
-      <h1 className="title">Sleep Guide Central</h1>
+      <h1 className="title">Sleep Central</h1>
       <button className="home-btn">login</button>
     </div>
   )
