@@ -8,35 +8,38 @@ import {
 function Login() {
   function logins(event){
     event.preventDefault()
-    let note=event.target.note.value
+    let email=event.target.email.value
     const requestOptions={
       method: 'POST',
       headers:{'Content-Type': 'application/json'},
-      body: JSON.stringify({note})
+      body: JSON.stringify({email})
     };
 
     fetch("/login", requestOptions).then(
       res=>res.json()
-    ).then(note => {
+    ).then(data => {
       // setNote(note)
-      console.log(note)
+      console.log(data)
     })
   }
 
   function regist(event){
     event.preventDefault()
-    let note=event.target.note.value
+    let user_details={name:event.target.name.value,
+    email:event.target.email.value,
+    password: event.target.password.value,
+    city: event.target.city.value,
+    birthday: event.target.birthday.value}
     const requestOptions={
       method: 'POST',
       headers:{'Content-Type': 'application/json'},
-      body: JSON.stringify({note})
+      body: JSON.stringify({user_details})
     };
 
-    fetch("/login", requestOptions).then(
+    fetch("/register", requestOptions).then(
       res=>res.json()
-    ).then(note => {
-      // setNote(note)
-      console.log(note)
+    ).then(data => {
+      console.log(data)
     })
   }
 
@@ -56,18 +59,26 @@ function Login() {
         {/* <Link to="/registration">Register Here</Link> */}
         </form>
         <form className="login-registration" onSubmit={regist}>
-          <h2>Registration</h2>
+          <h2>Register</h2>
           <label>
             name:
-            <input type="text"></input>
+            <input type="text" name="name"></input>
           </label>
           <label>
             email:
-            <input type="text"></input>
+            <input type="text" name="email"></input>
+          </label>
+          <label>
+            city:
+            <input type="text" name="city"></input>
+          </label>
+          <label>
+            birthday:
+            <input type="text" name="birthday"></input>
           </label>
           <label>
             password:
-            <input type="password"></input>
+            <input type="password" name="password"></input>
           </label>
           <input className="login-button" type="submit"></input>
         </form>
