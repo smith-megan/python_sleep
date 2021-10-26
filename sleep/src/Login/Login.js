@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 
 function Login() {
+  const[age, setAge]=useState([{}])
   function logins(event){
     event.preventDefault()
     let email=event.target.email.value
@@ -18,8 +19,10 @@ function Login() {
     fetch("/login", requestOptions).then(
       res=>res.json()
     ).then(data => {
-      // setNote(note)
-      console.log(data)
+      let today=new Date().getFullYear()
+      let birthday=parseInt(data.birthyear)
+      let userAge=today-birthday
+      setAge(userAge)
     })
   }
 
@@ -74,7 +77,7 @@ function Login() {
           </label>
           <label>
             birthday:
-            <input type="text" name="birthday"></input>
+            <input type="date" name="birthday"></input>
           </label>
           <label>
             password:

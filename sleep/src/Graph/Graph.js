@@ -27,6 +27,7 @@ function Graph() {
 
   const chart=()=>{
     setChartData({
+      type: "line",
       labels:['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
       datasets: [
         {
@@ -46,7 +47,13 @@ function Graph() {
           ],
           borderWidth: 2,
         },
-        
+        {
+          label: 'Your hours slept',
+          data: [5,4,3,2,12,15,0],
+          backgroundColor: [
+            '#000000'
+          ]
+        }
       ]
     })
   }
@@ -59,21 +66,16 @@ function Graph() {
       <div className="graph">
         <div className="left-arrow"></div>
         <div className="graph-image">
-          <Line data={chartData} options={{
-            // responsive: true,
+          <Line data={chartData} 
+          options={{
+            responsive: true,
             scales: {
-              yAxes: [
-                {
-                  ticks: {
-                    min: 0,
-                    // autoSkip: true,
-                    // maxTicksLimit: 24,
-                    beginAtZero: true
+              y: {
+                  beginAtZero: true
                   },
-                  gridLines: {display: false}
                 }
-              ]
-            }}}/>
+            }}
+            />
         </div>
         <div className="right-arrow"></div>
       </div>
