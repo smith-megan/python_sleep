@@ -6,8 +6,9 @@ import {
 } from "react-router-dom";
 
 function Login() {
-  const[age, setAge]=useState([{}])
+  // const[age, setAge]=useState([{age:0}])
   function logins(event){
+    // console.log(age)
     event.preventDefault()
     let email=event.target.email.value
     const requestOptions={
@@ -19,13 +20,13 @@ function Login() {
     fetch("/login", requestOptions).then(
       res=>res.json()
     ).then(data => {
-      let today=new Date().getFullYear()
-      let birthday=parseInt(data.birthyear)
-      let userAge=today-birthday
-      setAge(userAge)
+      // let today=new Date().getFullYear()
+      // let birthday=parseInt(data.birthyear)
+      // let userAge=today-birthday
+      // setAge(userAge)
+      
     })
   }
-
   function regist(event){
     event.preventDefault()
     let user_details={name:event.target.name.value,

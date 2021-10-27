@@ -2,7 +2,7 @@ import React,{useState, useEffect} from 'react'
 import './graph.css';
 import {Line} from 'react-chartjs-2';
 
-function Graph() {
+function Graph(props) {
 
   const[note, setNote]=useState([{}])
 
@@ -23,16 +23,53 @@ function Graph() {
     })
   }
 
+  function sendData(event) {
+    event.preventDefault()
+    let data={sleep: event.target.sleep.value,
+    wake: event.target.wake.value,
+    date: event.target.date.value
+  }
+  console.log(event.target.date.value)
+    console.log(data)
+    const requestOptions={
+      method: 'POST',
+      headers:{'Content-Type': 'application/json'},
+      body: JSON.stringify({data})
+    };
+
+    fetch("/data", requestOptions).then(
+      res=>res.json()
+    ).then(data => {
+      // setNote(note)
+      console.log(data)
+    })
+  }
+
   const [chartData, setChartData]=useState({})
 
-  const chart=()=>{
+  async function chart(){
+    let email="telfor@gmalil"
+    const requestOptions={
+      method: 'POST',
+      headers:{'Content-Type': 'application/json'},
+      body: JSON.stringify({email})
+    };
+    
+    const time=await fetch("/graph", requestOptions).then(
+      res=>res.json()
+    ).then(data => {
+      // console.log(data)
+      return data
+      })
+      
+      console.log(time.hours[0])
     setChartData({
       type: "line",
       labels:['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
       datasets: [
         {
           label: 'Low Healthy Baseline',
-          data: [6,6,6,6,6,6,6],
+          data: [time.hours[0],time.hours[0],time.hours[0],time.hours[0],time.hours[0],time.hours[0],time.hours[0]],
           backgroundColor: [
             'rgb(167,25,22,.7)'
           ],
@@ -41,7 +78,7 @@ function Graph() {
         },
         {
           label: 'High Healthy Baseline',
-          data: [9,9,9,9,9,9,9],
+          data: [time.hours[1],time.hours[1],time.hours[1],time.hours[1],time.hours[1],time.hours[1],time.hours[1]],
           backgroundColor: [
             'rgb(167,25,22,100)'
           ],
@@ -49,7 +86,7 @@ function Graph() {
         },
         {
           label: 'Your hours slept',
-          data: [5,4,3,2,12,15,0],
+          // data: [data1,data2,data3,data4,data5,data6,data7],
           backgroundColor: [
             '#000000'
           ]
@@ -57,12 +94,12 @@ function Graph() {
       ]
     })
   }
-
   useEffect(()=>{
     chart()
   }, [])
   return (
     <div>
+      <p>hello{props.age}</p>
       <div className="graph">
         <div className="left-arrow"></div>
         <div className="graph-image">
@@ -82,15 +119,18 @@ function Graph() {
       <div className="data">
         <div className="graph-updates">
           <div>
-            <p>Wake up</p>
-            <p>Sleep</p>
-          </div>
-          <div>
-            <p>"dateofweek"</p>
-            <p>"dayofweek"</p>
-            <input></input>
-            <input></input>
-            <button>^</button>
+            <form onSubmit={sendData}>
+              <label> date
+              <input type="date" name="date"></input>
+              </label>
+              <label> wake-up
+              <input type="time" name="wake"></input>
+              </label>
+              <label> sleep
+              <input type="time" name="sleep"></input>
+              </label>
+              <input type="submit"></input>
+            </form>
           </div>
         </div>
       </div>
