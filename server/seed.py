@@ -1,7 +1,7 @@
 # import datetime
 from sqlalchemy import func
 
-from server import Age, connect_to_db, db, app
+from server import Age, db
 
 def load_age():
   # six = Age(age=6, hours_low=9, hours_high=12)

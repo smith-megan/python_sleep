@@ -1,9 +1,11 @@
+from operator import ior
 from flask import Flask, render_template, json, request, redirect, flash, session;
 import datetime;
-from datetime import date;
+from datetime import date, timedelta;
 # from werkzeug import check_password_hash;
 # check_password_hash;
 from flask_sqlalchemy import SQLAlchemy;
+from sqlalchemy import desc;
 # from seed import load_age;
 
 app=Flask(__name__)
@@ -62,16 +64,14 @@ class Times(db.Model):
 
     __tablename__ = "times"
     
-    id=db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer)
-    date_id = db.Column(db.Integer)
-    date=db.Column(db.Date)
-    morning=db.Column(db.Date)
-    night=db.Column(db.Date)
-    week_id=db.Column(db.Integer)
+    date=db.Column(db.Date, primary_key=True)
+    user_email = db.Column(db.String)
+    wake=db.Column(db.Time)
+    sleep=db.Column(db.Time)
+    hours=db.Column(db.Integer)
 
     def __repr__(self):
-        return f"user_id={self.user_id} date_id={self.date_id} date={self.date} morning={self.morning} night={self.night} week_id={self.week_id}"
+        return f"date={self.date} user_email={self.user_email} wake={self.wake} sleep={self.sleep} hours={self.hours}"+"|"
 
 
 class Notes(db.Model):
@@ -171,7 +171,9 @@ def load_age():
   
   # Once we're done, we should commit our work
   db.session.commit()
-
+def load_tips():
+  tip1=Tips(...)
+  db.session.add_all([tip1])
 
 @app.route("/register", methods=["POST"])
 def register():
@@ -203,7 +205,7 @@ def login():
   email=details["email"]
   # password=request.args.get("password")
   # print(email)
-  user=User.query.filter_by(email=email).first()
+  user=User.filter_by(email=email).first()
   # print(user.birthday)
   date=user.birthday
   # print(date.year)
@@ -240,21 +242,67 @@ def graph():
   email=details["email"]
   user=User.query.filter_by(email=email).first()
   age=date.today().year-user.birthday.year
-  # print(age)
   
   times=Age.query.filter_by(age=age).first()
+  recorded_data=Times.query.order_by(Times.date.desc()).filter_by(user_email=email).limit(7).all()
+  dates=[]
+  for data_point in recorded_data:
+    edited=data_point.date
+    dates.append(edited)
+
+  hours_total=[]
+  for hours_point in recorded_data:
+    hours_total.append(hours_point.hours)
+  # print(recorded_data)
+  print(dates)
+  print(hours_total)
   # print(times)
   # print(times.hours_low)
-  return{"hours":[f"{times.hours_low}",f"{times.hours_high}"]}
+  return{"hours":[f"{times.hours_low}",f"{times.hours_high}"], "dates": dates, "slept_hours": hours_total}
 
 
 @app.route("/data", methods=["POST"])
 def data():
+  email="telfor@gmalil"
   details=(json.loads(request.data))
   sleep=details["data"]
-  print(details)
-  print(sleep)
 
+  s1 = sleep["wake"]
+  s2 = sleep["sleep"]
+  print(s1, s2)
+
+  hours1, minutes1 = map(int, s1.split(':'))
+  hours2, minutes2 = map(int, s2.split(':'))
+  print(hours1,hours2,minutes1,minutes2)
+  t_a = datetime.datetime(2021, 10, 25, hours1, minutes1)
+  t_b = datetime.datetime(2021, 10, 25, hours2, minutes2)
+
+  difference=t_a-t_b
+  hours=difference.total_seconds()/60**2
+  # print(difference)
+  # print(difference.total_seconds()/60**2)
+  
+  # now = datetime.datetime.now()
+  # datetime.datetime(2020, 11, 3, 22, 57, 12, 300437)
+  # yesterday = datetime.datetime(2020, 11, 3, 22, 57, 12, 300437)
+  # diff = now - yesterday
+  # print(diff)
+  # '11:15:49' # for example
+  # FMT = '%H:%M:%S'
+  # tdelta = datetime.strptime(s2, FMT) - datetime.strptime(s1, FMT)
+  # print(tdelta)
+  
+  # hours=sleep['sleep']-sleep['wake']
+  # print(hours)
+  # print(details)
+  # print(sleep)
+  data=Times(date=sleep['date'], user_email=email, wake=sleep['wake'],sleep=sleep['sleep'], hours=hours)
+  if not Times.query.filter_by(date=sleep["date"]).first():
+    db.session.add(data)
+    db.session.commit()
+  else:
+    db.session.query(Times).filter(Times.date == sleep["date"]).update({"wake": sleep['wake'], "sleep": sleep['sleep'], "hours": hours})
+    db.session.commit()
   return{"mess":"age"}
 
 @app.route("/notes", methods=["POST"])
@@ -266,6 +314,9 @@ def day():
   db.session.commit()
   return{"response":"note saved"}
 
+@app.route("/tips", methods=["GET"])
+def tips():
+  return{"tips"}
 if __name__=="__main__":
   connect_to_db(app)
   print("connected to db")

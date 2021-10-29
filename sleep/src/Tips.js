@@ -4,7 +4,7 @@ function Tips() {
   const[data, setData]=useState([{}])
 
   useEffect(()=>{
-    fetch("/favorites").then(
+    fetch("/tips").then(
       res=>res.json()
     ).then(data => {
       setData(data)

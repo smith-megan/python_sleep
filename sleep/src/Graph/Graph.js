@@ -25,6 +25,21 @@ function Graph(props) {
 
   function sendData(event) {
     event.preventDefault()
+
+    let valuestart=event.target.wake.value
+    let valuestop=event.target.sleep.value
+    console.log(valuestart,valuestop,"yikes")
+
+    var timeStart = new Date("01/01/2007 " + valuestart);
+    var timeEnd = new Date("01/01/2007 " + valuestop);
+
+    var difference = timeEnd - timeStart;    
+    console.log(difference+"maybe")        
+    var diff_result = new Date(difference);    
+
+    var hourDiff = diff_result.getHours();
+    console.log(hourDiff +"hello")
+
     let data={sleep: event.target.sleep.value,
     wake: event.target.wake.value,
     date: event.target.date.value
@@ -48,6 +63,7 @@ function Graph(props) {
   const [chartData, setChartData]=useState({})
 
   async function chart(){
+    
     let email="telfor@gmalil"
     const requestOptions={
       method: 'POST',
@@ -61,14 +77,15 @@ function Graph(props) {
       // console.log(data)
       return data
       })
-      
+      console.log(time)
       console.log(time.hours[0])
+      console.log(time.slept_hours)
     setChartData({
       type: "line",
-      labels:['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
+      labels:[time.dates[0].slice(0,-13), time.dates[1].slice(0,-13), time.dates[2].slice(0,-13), time.dates[3].slice(0,-13), time.dates[4].slice(0,-13), time.dates[5].slice(0,-13), time.dates[6].slice(0,-13)],
       datasets: [
         {
-          label: 'Low Healthy Baseline',
+          label: 'Low Baseline',
           data: [time.hours[0],time.hours[0],time.hours[0],time.hours[0],time.hours[0],time.hours[0],time.hours[0]],
           backgroundColor: [
             'rgb(167,25,22,.7)'
@@ -77,7 +94,7 @@ function Graph(props) {
           fill: '+1'
         },
         {
-          label: 'High Healthy Baseline',
+          label: 'High Baseline',
           data: [time.hours[1],time.hours[1],time.hours[1],time.hours[1],time.hours[1],time.hours[1],time.hours[1]],
           backgroundColor: [
             'rgb(167,25,22,100)'
@@ -86,7 +103,7 @@ function Graph(props) {
         },
         {
           label: 'Your hours slept',
-          // data: [data1,data2,data3,data4,data5,data6,data7],
+          data: [time.slept_hours[0],time.slept_hours[1],time.slept_hours[2],time.slept_hours[3],time.slept_hours[4],time.slept_hours[5],time.slept_hours[6]],
           backgroundColor: [
             '#000000'
           ]
