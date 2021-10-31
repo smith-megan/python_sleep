@@ -1,20 +1,43 @@
 .home{
   display: grid;
   grid-template-columns: 1fr;
-  background: url("./Assets/covers.jpg") no-repeat center / cover;
-  height: 90vh;
+  grid-gap: none;
+  background: url("./Assets/Frame2.png") no-repeat center / cover;
+  background-color: #0B0915;
+  height: 80vh;
   align-content: center;
+  /* width: 100%; */
+  border: none;
+  padding: 0px;
+  margin: 0px;
 }
 
 .title {
-  font-size: 4rem;
-  color: #A7543F;
+  font-size: 6rem;
+  /* font-style: italic; */
+  font-weight: 400;
+  color: #EEC492;
 }
 
 .home-btn {
   font-size: 2rem;
+  border: none;
   align-self: center;
   justify-self: center;
   width: 15%;
   height: 70px;
+  background-color: #3C3D48;
+  color: #EBEFDE;
+  text-decoration: none;
+  transition: 2s;
+  cursor: pointer;
+}
+
+.home-btn:hover {
+  background-color: #24242b;
+}
+
+.home-btn > a {
+  color: #EBEFDE;
+  text-decoration: none;
 }

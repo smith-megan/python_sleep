@@ -1,15 +1,16 @@
 .nav{
-  height: 8vh;
+  height: 18vh;
+  background-color: #3C3D48;
 }
 .logo{
   background: url("../Assets/logo.png") no-repeat center / contain;
-  width: 100%;
-  height: 75%;
+  width: 50%;
+  height: 50%;
 }
 
 .logo-div{
   display: grid;
-  grid-template-columns: 7% 13% 50% 30%;
+  grid-template-columns: 7% 14% 47% 30%;
   width: 100%;
   justify-items: center;
   align-items: center;
@@ -18,11 +19,12 @@
 }
 
 .logo-title{
-  font-size: 1.5rem;
-  color: #A7543F;
+  font-size: 2.4rem;
+  color: #EBEFDE;
   justify-self: left;
 }
 .nav-links {
+  font-size: 1.5rem;
   width: 100%;
   align-self: center;
   display: grid;
@@ -30,6 +32,6 @@
 }
 
 .nav-links > a {
-  color: #A7543F;
+  color: #EBEFDE;
   text-decoration: none;
 }

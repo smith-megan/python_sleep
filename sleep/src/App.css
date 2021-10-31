@@ -1,6 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital@0;1&family=Playfair+Display:ital@0;1&display=swap');
 .App {
+  font-family: 'EB Garamond', serif;
   text-align: center;
   display: grid;
-  color: #5e140f;
+  color: #EBEFDE;
   /* border: 2px solid orange; */
+  /* width: 100%; */
+  border: none;
+  padding: 0px;
+  margin: 0px;
 }

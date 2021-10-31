@@ -36,7 +36,7 @@ function Nav() {
             <Graph/>
           </Route>
           <Route>
-            <Login/>
+            <Login path="/login"/>
           </Route>
           <Route>
             <Registration path="/registration"/>
