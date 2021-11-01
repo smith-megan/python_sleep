@@ -12,7 +12,7 @@ import {
 } from "react-router-dom";
 
 function Nav() {
-  const[data, setData]=useState([{}])
+  const[data, setData]=useState("ehllo")
 
   return (
     <div className="nav">
@@ -33,7 +33,7 @@ function Nav() {
             <Home/>
           </Route>
           <Route path="/graph">
-            <Graph/>
+            <Graph data={data}/>
           </Route>
           <Route>
             <Login path="/login"/>

@@ -6,34 +6,45 @@ import {
 } from "react-router-dom";
 
 function Login() {
-  // const[age, setAge]=useState([{age:0}])
+  const[email, setEmail]=useState()
+  const[age, setAge]=useState([{age:0}])
+
   function logins(event){
-    // console.log(age)
     event.preventDefault()
+
     let email=event.target.email.value
+    let password=event.target.password.value
+    let login = {"email": email, "password": password}
+
     const requestOptions={
       method: 'POST',
       headers:{'Content-Type': 'application/json'},
-      body: JSON.stringify({email})
+      body: JSON.stringify({login})
     };
 
     fetch("/login", requestOptions).then(
       res=>res.json()
     ).then(data => {
-      // let today=new Date().getFullYear()
-      // let birthday=parseInt(data.birthyear)
-      // let userAge=today-birthday
-      // setAge(userAge)
+      console.log(data.authenticate)
+      if (data.authenticate===true) {
+        //set state to email
+      }
+      else {
+        // message failure?
+      }
       
     })
   }
+
   function regist(event){
     event.preventDefault()
+
     let user_details={name:event.target.name.value,
     email:event.target.email.value,
     password: event.target.password.value,
     city: event.target.city.value,
     birthday: event.target.birthday.value}
+
     const requestOptions={
       method: 'POST',
       headers:{'Content-Type': 'application/json'},
@@ -43,7 +54,6 @@ function Login() {
     fetch("/register", requestOptions).then(
       res=>res.json()
     ).then(data => {
-      console.log(data)
     })
   }
 

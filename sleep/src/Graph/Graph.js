@@ -2,29 +2,13 @@ import React,{useState, useEffect} from 'react'
 import './graph.css';
 import {Line} from 'react-chartjs-2';
 import {BiLeftArrow, BiRightArrow} from 'react-icons/bi';
+import Note from "./Note"
 
 function Graph(props) {
-
-  const[note, setNote]=useState([{}])
+  console.log(props.data)
+  // const[note, setNote]=useState([{}])
   const[skip, setSkip]=useState(0)
   // setSkip(0)
-
-  function saveNote(event) {
-    event.preventDefault()
-    let note=event.target.note.value
-    const requestOptions={
-      method: 'POST',
-      headers:{'Content-Type': 'application/json'},
-      body: JSON.stringify({note})
-    };
-
-    fetch("/notes", requestOptions).then(
-      res=>res.json()
-    ).then(note => {
-      setNote(note)
-      console.log(note)
-    })
-  }
 
   function sendData(event) {
     event.preventDefault()
@@ -47,8 +31,8 @@ function Graph(props) {
     wake: event.target.wake.value,
     date: event.target.date.value
   }
-  console.log(event.target.date.value)
-    console.log(data)
+  // console.log(event.target.date.value)
+    // console.log(data)
     const requestOptions={
       method: 'POST',
       headers:{'Content-Type': 'application/json'},
@@ -59,8 +43,9 @@ function Graph(props) {
       res=>res.json()
     ).then(data => {
       // setNote(note)
-      console.log(data)
+      // console.log(data)
     })
+    chart()
   }
 
   const [chartData, setChartData]=useState({})
@@ -217,31 +202,25 @@ console.log(skip, time.dates)
       </div>
       <div className="data">
         {/* <div className="graph-updates"> */}
-          <div>
-            <h2>Add a time</h2>
-            <form onSubmit={sendData}>
-              <label> date
+          {/* <div> */}
+            <form className="add-time-form" onSubmit={sendData}>
+            <h2>Add or Update Data</h2>
+              <label> Date
               <input type="date" name="date"></input>
               </label>
-              <label> wake-up
+              <label> Wake-up
               <input type="time" name="wake"></input>
               </label>
-              <label> sleep
+              <label> Sleep
               <input type="time" name="sleep"></input>
               </label>
-              <input type="submit"></input>
+              <input className="add-time-btn" type="submit"></input>
             </form>
-          </div>
+          {/* </div> */}
         {/* </div> */}
       </div>
       <div className="note">
-        <h2>Notes:</h2>
-        <form onSubmit={saveNote}>
-          <label>
-          <input type="text" name="note"></input>
-          </label>
-          <input type="submit"></input>
-        </form>
+        <Note/>
       </div>
     </div>
   )

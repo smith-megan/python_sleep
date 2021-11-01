@@ -68,12 +68,44 @@
 } */
 .data{
   display: flex;
+  flex-direction: column;
+  width: 100%;
   justify-content: center;
   background-color: #19191d;
   padding-top: 5%;
   padding-bottom: 5%;
   /* border: 2px solid pink; */
 }
+.add-time-form{
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+}
+.add-time-form > label>input {
+  padding: 1%;
+}
+.add-time-btn {
+  font-size: 1.5rem;
+  border: none;
+  align-self: center;
+  justify-self: center;
+  padding: .5%;
+  /* width: 15%; */
+  /* height: 70px; */
+  background-color: #3C3D48;
+  color: #EBEFDE;
+  text-decoration: none;
+  transition: 2s;
+  cursor: pointer;
+  font-family: 'EB Garamond', serif;
+}
+
+.add-time-btn:hover {
+  background-color: #24242b;
+}
+
+
 .note{
   padding-top: 5%;
   padding-bottom: 5%;
