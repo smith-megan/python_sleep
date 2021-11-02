@@ -30,21 +30,11 @@ function getNote() {
     setNote(data.notes)
   })
 }
-  // function updateNotePage(params){
-  //   let notediv=document.getElementById("noteshere")
-  //   for (let i=0; i<params.notes.length; i++){
-  //     console.log(params.notes[i])
-  //     let newp=document.createElement('p')
-  //     newp.textContent=params.notes[i]
-  //     notediv.append(newp)
-  //   }
-  // }
-
   useEffect(()=>{
     getNote()
   }, [])
 
-  return (<div>
+  return (<div className="notes">
     <h2>Notes:</h2>
         <div>
           <div id="noteshere"> 
@@ -54,6 +44,7 @@ function getNote() {
             )
           })}
           </div>
+          <p>add a note</p>
           <form onSubmit={saveNote}>
           <label>
             <input type="text" name="note"></input>

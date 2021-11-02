@@ -4,6 +4,7 @@ import Graph from '../Graph/Graph.js'
 import Home from '../Home.js'
 import Login from '../Login/Login.js'
 import Registration from '../Login/Registration'
+import Tips from "../Tips/Tips"
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,7 +13,9 @@ import {
 } from "react-router-dom";
 
 function Nav() {
-  const[data, setData]=useState("ehllo")
+  const[age, setAge]=useState(21)
+  const[city, setCity]=useState('Salt Lake City')
+  const[email, setEmail]=useState('none@gmail.com')
 
   return (
     <div className="nav">
@@ -23,7 +26,7 @@ function Nav() {
         <div></div>
         <div className="nav-links">
           <Link to="/">Home</Link>
-          <Link to="/">Tips</Link>
+          <Link to="/tips">Tips</Link>
           <Link to="/graph">Graph</Link>
           <Link to="/login">Login</Link>
         </div>
@@ -33,16 +36,16 @@ function Nav() {
             <Home/>
           </Route>
           <Route path="/graph">
-            <Graph data={data}/>
+            <Graph age={age} setAge={setAge} city={city} setCity={setCity} email={email} setEmail={setEmail}/>
           </Route>
-          <Route>
-            <Login path="/login"/>
+          <Route path="/login">
+            <Login age={age} setAge={setAge} city={city} setCity={setCity} email={email} setEmail={setEmail}/>
           </Route>
-          <Route>
-            <Registration path="/registration"/>
+          <Route path="/registration">
+            <Registration/>
           </Route>
-          <Route>
-            {/* <Registration path="/registration"/> */}
+          <Route path="/tips">
+            <Tips/>
           </Route>
 
         </Switch>

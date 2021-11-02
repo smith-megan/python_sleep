@@ -1,0 +1,46 @@
+.tips{
+  display: grid;
+  grid-template-columns: 1fr;
+  /* background: none; */
+  background-color: #0B0915;
+  width: 100%;
+  /* height: 80vh; */
+  align-items: center;
+  justify-items: center;
+  text-align: left;
+  /* border: 2px solid green; */
+}
+.tips-card{
+  width: 70%;
+  display: grid;
+  grid-template-columns: .5fr .5fr; 
+  grid-column-gap: 2%;
+}
+.tip-div{
+  background-color: #3C3D48;
+  padding: 2%;
+  margin-bottom: 4%;
+}
+.tip-star{
+  background: url("../Assets/star1.png") no-repeat center / contain;
+  border: none;
+  width: 20px;
+  height: 20px;
+  align-self: center;
+  margin: 1%;
+}
+.tip-star:hover{
+  background: url("../Assets/Star2.png") no-repeat center / contain;
+}
+.tip-info{
+  padding-left: 6%;
+}
+.tip-header-div{
+  display: flex;
+  flex-direction: row;
+  /* justify-content: center; */
+  align-content: center;
+  margin-bottom: -20px;
+}
+/* .tip-header{
+padding-bottom: -15px;} */

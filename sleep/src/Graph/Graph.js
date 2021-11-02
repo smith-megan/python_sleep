@@ -5,10 +5,8 @@ import {BiLeftArrow, BiRightArrow} from 'react-icons/bi';
 import Note from "./Note"
 
 function Graph(props) {
-  console.log(props.data)
-  // const[note, setNote]=useState([{}])
   const[skip, setSkip]=useState(0)
-  // setSkip(0)
+  const [chartData, setChartData]=useState({})
 
   function sendData(event) {
     event.preventDefault()
@@ -20,19 +18,16 @@ function Graph(props) {
     var timeStart = new Date("01/01/2007 " + valuestart);
     var timeEnd = new Date("01/01/2007 " + valuestop);
 
-    var difference = timeEnd - timeStart;    
-    // console.log(difference+"maybe")        
+    var difference = timeEnd - timeStart;           
     var diff_result = new Date(difference);    
 
     var hourDiff = diff_result.getHours();
-    // console.log(hourDiff +"hello")
 
     let data={sleep: event.target.sleep.value,
     wake: event.target.wake.value,
-    date: event.target.date.value
+    date: event.target.date.value,
+    email: props.email
   }
-  // console.log(event.target.date.value)
-    // console.log(data)
     const requestOptions={
       method: 'POST',
       headers:{'Content-Type': 'application/json'},
@@ -43,20 +38,18 @@ function Graph(props) {
       res=>res.json()
     ).then(data => {
       // setNote(note)
-      // console.log(data)
+      console.log(data)
     })
     chart()
   }
 
-  const [chartData, setChartData]=useState({})
 
   async function chart(){
-    
-    let email="telfor@gmalil"
+    // let email=props.email
     const requestOptions={
       method: 'POST',
       headers:{'Content-Type': 'application/json'},
-      body: JSON.stringify({email})
+      body: JSON.stringify({"email":props.email, "age": props.age})
     };
     
     const time=await fetch("/graph", requestOptions).then(
@@ -64,7 +57,7 @@ function Graph(props) {
     ).then(data => {
       return data
       })
-
+      console.log(time)
     setChartData({
       type: "line",
       labels:[time.dates[0].slice(0,-13), time.dates[1].slice(0,-13), time.dates[2].slice(0,-13), time.dates[3].slice(0,-13), time.dates[4].slice(0,-13), time.dates[5].slice(0,-13), time.dates[6].slice(0,-13)],
@@ -105,7 +98,7 @@ function Graph(props) {
   }, [])
 
   async function graphBack(skipped){
-    let data={email: "telfor@gmalil",
+    let data={email: props.email,
       count: skipped
     }
     const requestOptions={
@@ -208,11 +201,11 @@ console.log(skip, time.dates)
               <label> Date
               <input type="date" name="date"></input>
               </label>
-              <label> Wake-up
-              <input type="time" name="wake"></input>
-              </label>
               <label> Sleep
               <input type="time" name="sleep"></input>
+              </label>
+              <label> Wake-up
+              <input type="time" name="wake"></input>
               </label>
               <input className="add-time-btn" type="submit"></input>
             </form>

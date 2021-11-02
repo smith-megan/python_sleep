@@ -111,3 +111,8 @@
   padding-bottom: 5%;
   background-color: #24242b;
 }
+
+.notes{
+  display: grid;
+  grid-template-columns: .5fr .5fr;
+}
