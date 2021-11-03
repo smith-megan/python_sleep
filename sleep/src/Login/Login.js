@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from 'react'
-import Registration from './Registration';
+// import Registration from './Registration';
 import "./login.css"
 import {
   BrowserRouter as Router,
@@ -47,11 +47,11 @@ function Login(props) {
         <form className="login-form" onSubmit={logins}>
           <h2>Login</h2>
             <label>
-              email:
+              Email:
               <input type="text" name="email"></input>
             </label>
             <label>
-              password:
+              Password:
               <input type="password" name="password"></input>
             </label>
           <input className="login-button" type="submit"></input>

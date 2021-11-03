@@ -1,5 +1,5 @@
 import React,{useState, useEffect} from 'react'
-import "./login.css"
+import "./registration.css"
 
 function Registration() {
 
@@ -24,7 +24,7 @@ function Registration() {
     })
   }
   return (
-    <div className="login">
+    <div className="registration">
       <div className="registration-bg-div">
         <form className="login-registration" onSubmit={regist}>
           <h2>Register</h2>
@@ -48,7 +48,7 @@ function Registration() {
             password:
             <input type="password" name="password"></input>
           </label>
-          <input className="login-button" type="submit"></input>
+          <input className="register-btn" type="submit"></input>
         </form>
       </div>
     </div>

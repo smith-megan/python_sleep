@@ -24,12 +24,9 @@ function Nav() {
         <div className="logo"></div>
         <p className="logo-title">Sleep Central</p>
         <div></div>
-        <div className="nav-links">
-          <Link to="/">Home</Link>
-          <Link to="/tips">Tips</Link>
-          <Link to="/graph">Graph</Link>
-          {email?<Link onClick={()=>{setEmail('')}} to="/login">Logout</Link>:<Link to="/login">Login</Link>}
-        </div>
+          {email?<div className="nav-links"><Link to="/">Home</Link><Link to="/tips">Tips</Link>
+          <Link to="/graph">Dashboard</Link><Link onClick={()=>{setEmail('')}} to="/login">Logout</Link></div>:<div className="nav-links"><div></div><div></div><Link to="/">Home</Link><Link to="/login">Login</Link></div>}
+
       </div>
         <Switch>
           <Route exact path="/">

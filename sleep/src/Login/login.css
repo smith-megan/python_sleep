@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: 1fr;
   background: url("../Assets/mountain2.png") no-repeat center / cover;
-  height: 80vh;
+  height: 83vh;
   align-items: center;
   justify-items: center;
 }
@@ -15,8 +15,10 @@
 }
 
 .login-form{
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  width: 100%;
+  /* grid-template-columns: .5fr .5fr; */
+  /* flex-direction: column; */
   justify-items: center;
   align-items: center;
 }
@@ -28,10 +30,32 @@
 
 .login-form > label{
   padding: 1%;
+  /* border: 2px solid green; */
+  width: 40%;
+}
+
+.login-form > label>input{
+  padding: 1%;
+  /* border: 2px solid green; */
+  width: 100%;
 }
 
 .login-button{
-  width: 60%;
+  background-color: #0B0915;
+  border: none;
+  font-size: 1.4rem;
+  color: #EBEFDE;
+  text-decoration: none;
+  transition: 2s;
+  cursor: pointer;
+  font-family: 'EB Garamond', serif;
+  padding: 1%;
+  width: 30%;
+  margin-top: 3%;
+}
+
+.login-button:hover{
+  background-color: #31323b;
 }
 .register-link{
   color: #EBEFDE;

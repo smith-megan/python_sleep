@@ -101,6 +101,25 @@
   font-family: 'EB Garamond', serif;
 }
 
+.add-note-btn{
+  font-size: 1.5rem;
+  border: none;
+  align-self: center;
+  justify-self: center;
+  padding: .5%;
+  /* width: 15%; */
+  /* height: 70px; */
+  background-color: #3C3D48;
+  color: #EBEFDE;
+  text-decoration: none;
+  transition: 2s;
+  cursor: pointer;
+  font-family: 'EB Garamond', serif;
+  margin-top: 2%;
+  justify-self: center;
+  width: 35%;
+}
+
 .add-time-btn:hover {
   background-color: #24242b;
 }
@@ -120,6 +139,10 @@
 .add-note-div {
   border-right: 2px solid #EBEFDE;
 }
+.add-note-form {
+  display: grid;
+}
+
 .dash-tips-grid{
   display: grid;
   grid-template-columns: .5fr .5fr;

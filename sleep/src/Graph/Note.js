@@ -7,11 +7,11 @@ function Note(props) {
 
   function saveNote(event) {
     event.preventDefault()
-    let note=event.target.note.value
+    // let note={note: event.target.note.value, email: props.email}
     const requestOptions={
       method: 'POST',
       headers:{'Content-Type': 'application/json'},
-      body: JSON.stringify({note})
+      body: JSON.stringify({note: event.target.note.value, email: props.email})
     };
 
     fetch("/notes", requestOptions).then(
@@ -25,7 +25,7 @@ function getNote() {
     method: 'GET',
     headers:{'Content-Type': 'application/json'}
   };
-  fetch("/notes", requestOptions).then(
+  fetch(`/notes/${props.email}`, requestOptions).then(
     res=>res.json()
   ).then(data => {
     setNote(data.notes)
@@ -41,8 +41,23 @@ function getTips(){
   fetch(`/dashboardtip/${props.email}`, requestOptions).then(
     res=>res.json()
   ).then(data => {
+    console.log(data)
     console.log(data.tips)
     setTip(data.tips)
+  })
+}
+
+function deleteTip(tipId) {
+  // event.preventDefault()
+  const requestOptions={
+    method: 'DELETE',
+    headers:{'Content-Type': 'application/json'}
+  };
+
+  fetch(`/tips/${props.email}/${tipId}`, requestOptions).then(
+    res=>res.json()
+  ).then(data => {
+    getTips()
   })
 }
 
@@ -57,18 +72,20 @@ useEffect(()=>{
           <div id="noteshere"> 
           {note.map((element, index, array)=>{
             return(
-            <p key={element+index}>{element[0]}</p>
+              <div>
+                <p key={element+index}>{element}</p>
+              </div>
             )
           })}
           </div>
         </div>
         <div className="add-note-div">
-          <form onSubmit={saveNote}>
+          <form className="add-note-form"onSubmit={saveNote}>
           <label>
           <p>Add a note</p>
             <input type="text" name="note"></input>
            </label>
-           <input className="add-time-btn" type="submit"></input>
+           <input className="add-note-btn" type="submit"></input>
           </form>
         </div>
         <div className="dash-tips-div">
@@ -78,7 +95,7 @@ useEffect(()=>{
             return(
               <div className="dash-tips" key={element+index}>
                 <button className="dash-tip-star"onClick={()=>{
-                  // unfavorited(element[3])
+                  deleteTip(element[2])
                 }}></button>
                 <p><a className="dash-tips-link" href={element[1]}>{element[0].split(":")[0]}</a></p>
             </div>
