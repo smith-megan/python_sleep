@@ -7,12 +7,18 @@
   justify-items: center;
 }
 
-.login-form{
+.login-bg-div{
+  background-color: #3C3D48;
   padding: 4%;
   width: 50%;
+
+}
+
+.login-form{
   display: flex;
   flex-direction: column;
-  background-color: #3C3D48;
+  justify-items: center;
+  align-items: center;
 }
 
 /* .login-inputs{
@@ -26,4 +32,16 @@
 
 .login-button{
   width: 60%;
+}
+.register-link{
+  color: #EBEFDE;
+}
+
+
+.registration-bg-div{
+  background-color: #3C3D48;
+  /* display: flex;
+  flex-direction: column; */
+  padding: 4%;
+  width: 50%;
 }

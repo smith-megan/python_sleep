@@ -25,6 +25,7 @@ function Registration() {
   }
   return (
     <div className="login">
+      <div className="registration-bg-div">
         <form className="login-registration" onSubmit={regist}>
           <h2>Register</h2>
           <label>
@@ -49,6 +50,7 @@ function Registration() {
           </label>
           <input className="login-button" type="submit"></input>
         </form>
+      </div>
     </div>
   )
 }

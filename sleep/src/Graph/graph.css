@@ -114,5 +114,35 @@
 
 .notes{
   display: grid;
+  grid-template-columns: .33fr .33fr .33fr;
+}
+
+.add-note-div {
+  border-right: 2px solid #EBEFDE;
+}
+.dash-tips-grid{
+  display: grid;
   grid-template-columns: .5fr .5fr;
+}
+.dash-tips{
+  padding-left: 10%;
+  display: flex;
+  flex-direction: row;
+}
+.dash-tips-link{
+  color: #EEC492;
+  text-decoration:none
+}
+
+.dash-tip-star{
+  cursor: pointer;
+  background: url("../Assets/Star2.png") no-repeat center / contain;
+  border: none;
+  width: 20px;
+  height: 20px;
+  align-self: center;
+  margin: 1%;
+}
+.dash-tip-star:hover{
+  background: url("../Assets/star1.png") no-repeat center / contain;
 }

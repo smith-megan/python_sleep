@@ -213,7 +213,7 @@ console.log(skip, time.dates)
         {/* </div> */}
       </div>
       <div className="note">
-        <Note/>
+        <Note email={props.email}/>
       </div>
     </div>
   )

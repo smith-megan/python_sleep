@@ -43,6 +43,7 @@ function Login(props) {
 
   return (
     <div className="login">
+      <div className="login-bg-div">
         <form className="login-form" onSubmit={logins}>
           <h2>Login</h2>
             <label>
@@ -55,7 +56,8 @@ function Login(props) {
             </label>
           <input className="login-button" type="submit"></input>
         </form>
-        <Link to="/registration">or Register Here</Link>
+        <Link to="/registration" className="register-link">or Register Here</Link>
+      </div>
     </div>
   )
 }

@@ -15,7 +15,7 @@ import {
 function Nav() {
   const[age, setAge]=useState(21)
   const[city, setCity]=useState('Salt Lake City')
-  const[email, setEmail]=useState('none@gmail.com')
+  const[email, setEmail]=useState('')
 
   return (
     <div className="nav">
@@ -28,7 +28,7 @@ function Nav() {
           <Link to="/">Home</Link>
           <Link to="/tips">Tips</Link>
           <Link to="/graph">Graph</Link>
-          <Link to="/login">Login</Link>
+          {email?<Link onClick={()=>{setEmail('')}} to="/login">Logout</Link>:<Link to="/login">Login</Link>}
         </div>
       </div>
         <Switch>
@@ -45,7 +45,7 @@ function Nav() {
             <Registration/>
           </Route>
           <Route path="/tips">
-            <Tips/>
+            <Tips email={email}/>
           </Route>
 
         </Switch>
