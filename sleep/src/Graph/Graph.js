@@ -13,7 +13,6 @@ function Graph(props) {
 
     let valuestart=event.target.wake.value
     let valuestop=event.target.sleep.value
-    // console.log(valuestart,valuestop,"yikes")
 
     var timeStart = new Date("01/01/2007 " + valuestart);
     var timeEnd = new Date("01/01/2007 " + valuestop);
@@ -38,7 +37,6 @@ function Graph(props) {
       res=>res.json()
     ).then(data => {
       // setNote(note)
-      console.log(data)
     })
     chart()
   }
@@ -57,7 +55,6 @@ function Graph(props) {
     ).then(data => {
       return data
       })
-      console.log(time)
     setChartData({
       type: "line",
       labels:[time.dates[0].slice(0,-13), time.dates[1].slice(0,-13), time.dates[2].slice(0,-13), time.dates[3].slice(0,-13), time.dates[4].slice(0,-13), time.dates[5].slice(0,-13), time.dates[6].slice(0,-13)],
@@ -112,7 +109,6 @@ function Graph(props) {
       ).then(data => {
       return(data)
     })
-console.log(skip, time.dates)
     setChartData({
       type: "line",
       labels:[time.dates[0].slice(0,-13), time.dates[1].slice(0,-13), time.dates[2].slice(0,-13), time.dates[3].slice(0,-13), time.dates[4].slice(0,-13), time.dates[5].slice(0,-13), time.dates[6].slice(0,-13)],

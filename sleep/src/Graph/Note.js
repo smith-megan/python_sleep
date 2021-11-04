@@ -28,9 +28,25 @@ function getNote() {
   fetch(`/notes/${props.email}`, requestOptions).then(
     res=>res.json()
   ).then(data => {
-    setNote(data.notes)
+    setNote([data.notes])
   })
 }
+
+function deleteNote(noteId) {
+  // event.preventDefault()
+  const requestOptions={
+    method: 'DELETE',
+    headers:{'Content-Type': 'application/json'}
+  };
+
+  fetch(`/notes/${props.email}/${noteId}`, requestOptions).then(
+    res=>res.json()
+  ).then(data => {
+    getNote()
+  })
+}
+
+
 
 function getTips(){
   const requestOptions={
@@ -41,14 +57,11 @@ function getTips(){
   fetch(`/dashboardtip/${props.email}`, requestOptions).then(
     res=>res.json()
   ).then(data => {
-    console.log(data)
-    console.log(data.tips)
     setTip(data.tips)
   })
 }
 
 function deleteTip(tipId) {
-  // event.preventDefault()
   const requestOptions={
     method: 'DELETE',
     headers:{'Content-Type': 'application/json'}
@@ -66,14 +79,16 @@ useEffect(()=>{
   getTips()
 }, [])
 
-  return (<div className="notes">
+return (<div className="notes">
         <div>
           <h2>Notes</h2>
           <div id="noteshere"> 
           {note.map((element, index, array)=>{
             return(
               <div>
-                <p key={element+index}>{element}</p>
+                <p className="notes-item" key={element+index} onClick={()=>{
+                  deleteNote(element[1])
+                  }}>{element[0]}</p>
               </div>
             )
           })}

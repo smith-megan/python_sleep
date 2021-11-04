@@ -139,6 +139,15 @@
 .add-note-div {
   border-right: 2px solid #EBEFDE;
 }
+
+.notes-item{
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.notes-item:hover{
+  text-decoration: line-through;
+}
 .add-note-form {
   display: grid;
 }

@@ -9,14 +9,11 @@ function Tips(props) {
     fetch("/tips").then(
       res=>res.json()
     ).then(data => {
-      console.log(data.tips)
       setTip(data.tips)
-      console.log(tip)
     })
   }, [])
 
   function favorited(idNum) {
-    console.log(idNum)
     let data={user_email: props.email,
       tip_id: idNum
     }
@@ -29,7 +26,6 @@ function Tips(props) {
       fetch("/savedtip", requestOptions).then(
         res=>res.json()
       ).then(data => {
-        console.log(data)
       })
   }
   return (

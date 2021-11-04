@@ -11,8 +11,6 @@ function Login(props) {
   // const[age, setAge]=useState(0)
   function logins(event){
     event.preventDefault()
-    // props.setAge(10)
-    // console.log(props.age)
 
     let email=event.target.email.value
     let password=event.target.password.value
@@ -27,12 +25,10 @@ function Login(props) {
     fetch("/login", requestOptions).then(
       res=>res.json()
     ).then(data => {
-      console.log(data.authenticate)
       if (data.authenticate===true) {
         props.setEmail(email)
         props.setAge(data.age)
         props.setCity(data.city)
-        console.log(props.email, props.age, props.city)
       }
       else {
         // message failure?
