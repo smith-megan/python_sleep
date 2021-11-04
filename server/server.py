@@ -1,12 +1,10 @@
 from operator import ior
 from flask import Flask, render_template, json, request, redirect, flash, session;
 import datetime;
-from datetime import date, timedelta;
-# from werkzeug import check_password_hash;
-# check_password_hash;
+from datetime import date;
+from dateutil.relativedelta import *;
 from flask_sqlalchemy import SQLAlchemy;
 from sqlalchemy import desc;
-# from seed import load_age;
 
 app=Flask(__name__)
 db=SQLAlchemy(app)
@@ -15,9 +13,8 @@ db=SQLAlchemy(app)
 
 
 def connect_to_db(app):
-  app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:HelloG1T@localhost:5432/lunardb'
   app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
-  # instantiate db]
+  # instantiate db
   db.app=app
   db.init_app(app)
 
@@ -53,18 +50,19 @@ class User_tips(db.Model):
     __tablename__ = "user_tips"
 
     id=db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer)
+    user_email = db.Column(db.String)
     tip_id = db.Column(db.Integer)
 
     def __repr__(self):
-        return f"<user_id={self.user_id} tip_id={self.tip_id}>"
+        return f"<user_email={self.user_email} tip_id={self.tip_id}>"
 
 class Times(db.Model):
     """time table"""
 
     __tablename__ = "times"
     
-    date=db.Column(db.Date, primary_key=True)
+    id=db.Column(db.Integer, primary_key=True)
+    date=db.Column(db.Date)
     user_email = db.Column(db.String)
     wake=db.Column(db.Time)
     sleep=db.Column(db.Time)
@@ -80,12 +78,11 @@ class Notes(db.Model):
     __tablename__ = "notes"
     
     id=db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer)
-    week_id = db.Column(db.Integer)
+    user_email = db.Column(db.String)
     note=db.Column(db.String)
 
     def __repr__(self):
-        return f"<user_id={self.user_id} week_id={self.week_id} note={self.note}>"
+        return f"<user_id={self.user_email} note={self.note}>"
 
 class User(db.Model):
     """user table"""
@@ -166,14 +163,26 @@ def load_age():
   fifty_nine = Age(age=59, hours_low=7, hours_high=9)
   sixty = Age(age=60, hours_low=7, hours_high=9)
 
-  # We need to add to the session or it won't ever be stored
   db.session.add_all([one, two, three, four, five, six,seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen, twenty, twenty_one, twenty_two, twenty_three, twenty_four, twenty_five, twenty_six, twenty_seven, twenty_eight, twenty_nine, thirty, thirty_one, thirty_two, thirty_three, thirty_four, thirty_five, thirty_six, thirty_seven, thirty_eight, thirty_nine, forty, forty_one, forty_two, forty_three, forty_four, forty_five, forty_six, forty_seven, forty_eight, forty_nine, fifty, fifty_one, fifty_two, fifty_three, fifty_four, fifty_five, fifty_six, fifty_seven, fifty_eight, fifty_nine, sixty])
   
-  # Once we're done, we should commit our work
   db.session.commit()
+
+
 def load_tips():
-  tip1=Tips(...)
-  db.session.add_all([tip1])
+  tip1=Tips(tip="Relaxation Exercises: Breathing, Visualization, Progressive Muscle Relaxation, Biofeedback", source="The Sleep Foundation", link="https://www.sleepfoundation.org/sleep-hygiene/relaxation-exercises-to-help-fall-asleep")
+  tip2=Tips(tip="Melatonin: Jetlag, Shifting Schedule, Side Effects, Dosage", source="The Sleep Foundation", link="https://www.sleepfoundation.org/melatonin")
+  tip3=Tips(tip="Sleep Apnea: Definition, AHI, Measurement, Home Tests", source="The Sleep Foundation", link="https://www.sleepfoundation.org/sleep-apnea/ahi")
+  tip4=Tips(tip="Weighted Blankets: 9 Options, Care, Costs, FAQ", source="The Sleep Foundation", link="https://www.sleepfoundation.org/best-weighted-blankets")
+  tip5=Tips(tip="Diseases Linked with Sleep Health: Diabetes, CardioVascular Disease, Obesity, Depression", source="The CDC", link="https://www.cdc.gov/sleep/about_sleep/chronic_disease.html")
+  tip6=Tips(tip="Snoring: Causes, Remedies, Devices", source="American Sleep Association", link="https://www.sleepassociation.org/sleep-disorders/snoring/what-causes-snoring/")
+  tip7=Tips(tip="Sleep Hygeine: General tips, Schedule, Activites, Food, Environment", source="American Sleep Association", link="https://www.sleepassociation.org/about-sleep/sleep-hygiene-tips/sleep-hygiene/")
+  tip8=Tips(tip="Insomnia: Definition, Psychiatric Issues, Physical Issues, Medications, Lifestyle", source="American Sleep Association", link="https://www.sleepassociation.org/sleep-disorders/insomnia/insomnia-causes/")
+  tip9=Tips(tip="Nightmares: Nightmares or Night Terrors, Frequency, Treatment", source="American Sleep Association", link="https://www.sleepassociation.org/sleep-disorders/night-terrors/nightmares/")
+  tip10=Tips(tip="Circadian Rhythm: Types, Treatments, Research, FAQ", source="American Sleep Association", link="https://www.sleepassociation.org/sleep-disorders/circadian-rhythm/")
+  tip11=Tips(tip="Sleep and Fatigue: Sleep Pressure, Circadian Rhythm, Light, Fatigue", source="CDC", link="https://www.cdc.gov/niosh/emres/longhourstraining/sleepfatigue.html")
+  tip12=Tips(tip="Naps: Benefits, Drawbacks, Tips", source="The Mayo Clinic", link="https://www.mayoclinic.org/healthy-lifestyle/adult-health/in-depth/napping/art-20048319")
+  db.session.add_all([tip1, tip2,tip3, tip4,tip5,tip6,tip7, tip8, tip9, tip10,tip11, tip12])
+  db.session.commit()
 
 @app.route("/register", methods=["POST"])
 def register():
@@ -187,117 +196,155 @@ def register():
   password=details["user_details"]["password"]
   city=details["user_details"]["city"]
   birthday=details["user_details"]["birthday"]
-  today=date.today()
-  print(today)
-
-  print(name,email,password,city,birthday)
 
   user_details=User(username=name,email=email, password=password, city=city,birthday=birthday)
   db.session.add(user_details)
   db.session.commit()
 
-  return {"message": "success"}
+  return {"message": "user added"}
 
 
 @app.route("/login", methods=["POST"])
 def login():
-  details=(json.loads(request.data))
+  predetails=(json.loads(request.data))
+  details=predetails["login"]
   email=details["email"]
-  # password=request.args.get("password")
-  # print(email)
-  user=User.filter_by(email=email).first()
-  # print(user.birthday)
-  date=user.birthday
-  # print(date.year)
+  password=details["password"]
+
+  user=User.query.filter_by(email=email).first()
+  dbpassword=user.password
+  answer=False
+  age=0
+
+  if dbpassword==password:
+    birthday=user.birthday.date()
+    today=date.today()
+    agediff=relativedelta(today,birthday)
+    age=agediff.years
+    answer=True
+    city=user.city
+
+  return{"authenticate": answer, "age": age, "city":city}
 
 
-   # if user.email == email and check_password_hash(user.password, password):
-  #   session['logged_in_user_id']=user.id
-  #   logged_in_user_id=user.id
-
-  # if 'logged_in_user_id' in session.keys():
-  #   user=User.query.get(logged_in_user_id)
-  #   flash(f"Logged in user with email: {user.email}")
-
-  # else:
-  #   flash("incorrect email/password.")
-  #   return redirect("/login")
-
-  return{"birthyear":f"{date.year}"}
-  # {redirect: ("/profile")}
+# @app.route("/profile")
+# def profile():
+#   return{"members":["hi"]}
 
 
-@app.route("/profile")
-def profile():
-  return{"members":["hi"]}
-
-
-@app.route("/members")
-def members():
-  return{"members":["member1","member2","member3"]}
+# @app.route("/members")
+# def members():
+#   return{"members":["member1","member2","member3"]}
 
 @app.route("/graph", methods=["POST"])
 def graph():
   details=(json.loads(request.data))
   email=details["email"]
-  user=User.query.filter_by(email=email).first()
-  age=date.today().year-user.birthday.year
-  
+  age=details["age"]
+
+
+  # user=User.query.filter_by(email=email).first()
   times=Age.query.filter_by(age=age).first()
+  
   recorded_data=Times.query.order_by(Times.date.desc()).filter_by(user_email=email).limit(7).all()
+  dates=[date.today(),date.today(),date.today(),date.today(),date.today(),date.today(),date.today()]
+  hours_total=[0,0,0,0,0,0,0]
+  
+  for data_point in recorded_data:
+    edited=data_point.date
+    dates.insert(0,edited)
+    dates.pop()
+
+  for hours_point in recorded_data:
+    hours_total.insert(0,hours_point.hours)
+    hours_total.pop()
+
+  # if len(dates) == 0:
+  #   dates=[date.today(),date.today(),date.today(),date.today(),date.today(),date.today(),date.today()]
+  # if len(hours_total)==0:
+    # hours_total=[0,0,0,0,0,0,0]
+  return{"hours":[f"{times.hours_low}",f"{times.hours_high}"], "dates": dates, "slept_hours": hours_total}
+
+@app.route("/backhistory", methods=["POST"])
+def backhistory():
+  details=(json.loads(request.data))
+  email=details["data"]["email"]
+
+  user=User.query.filter_by(email=email).first()
+  age=date.today().year-user.birthday.year 
+  times=Age.query.filter_by(age=age).first()
+
+  counted=details["data"]["count"]
+  recorded_data=Times.query.order_by(Times.date.desc()).filter_by(user_email=email).offset(counted).limit(7).all()
+  
   dates=[]
   for data_point in recorded_data:
     edited=data_point.date
-    dates.append(edited)
-
+    dates.insert(0,edited)
+  
   hours_total=[]
   for hours_point in recorded_data:
-    hours_total.append(hours_point.hours)
-  # print(recorded_data)
-  print(dates)
-  print(hours_total)
-  # print(times)
-  # print(times.hours_low)
-  return{"hours":[f"{times.hours_low}",f"{times.hours_high}"], "dates": dates, "slept_hours": hours_total}
+    hours_total.insert(0, hours_point.hours)
 
+  if len(dates)==6:
+    dates.extend(date.today())
+    hours_total.extend(0)
+
+  if len(dates)==5:
+    dates.extend((date.today(),date.today()))
+    hours_total.extend((0,0))
+  
+  if len(dates)==4:
+    dates.extend((date.today(),date.today(),date.today()))
+    hours_total.extend((0,0,0))
+
+  if len(dates)==3:
+    dates.extend((date.today(),date.today(),date.today(),date.today()))
+    hours_total.extend((0,0,0,0))
+
+  if len(dates)==2:
+    dates.extend((date.today(),date.today(),date.today(),date.today(),date.today()))
+    hours_total.extend((0,0,0,0,0))
+
+  if len(dates)==1:
+    dates.extend((date.today(),date.today(),date.today(),date.today(),date.today(),date.today()))
+    hours_total.extend((0,0,0,0,0,0))
+
+  if len(dates)==0:
+    dates.extend((date.today(),date.today(),date.today(),date.today(),date.today(),date.today(),date.today()))
+    hours_total.extend((0,0,0,0,0,0,0))
+
+  return{"hours":[f"{times.hours_low}",f"{times.hours_high}"],"dates": dates, "slept_hours": hours_total}
 
 @app.route("/data", methods=["POST"])
 def data():
-  email="telfor@gmalil"
   details=(json.loads(request.data))
   sleep=details["data"]
 
+  email=sleep["email"]
   s1 = sleep["wake"]
   s2 = sleep["sleep"]
-  print(s1, s2)
 
   hours1, minutes1 = map(int, s1.split(':'))
   hours2, minutes2 = map(int, s2.split(':'))
-  print(hours1,hours2,minutes1,minutes2)
   t_a = datetime.datetime(2021, 10, 25, hours1, minutes1)
   t_b = datetime.datetime(2021, 10, 25, hours2, minutes2)
 
   difference=t_a-t_b
   hours=difference.total_seconds()/60**2
-  # print(difference)
-  # print(difference.total_seconds()/60**2)
   
   # now = datetime.datetime.now()
   # datetime.datetime(2020, 11, 3, 22, 57, 12, 300437)
   # yesterday = datetime.datetime(2020, 11, 3, 22, 57, 12, 300437)
   # diff = now - yesterday
-  # print(diff)
   # '11:15:49' # for example
   # FMT = '%H:%M:%S'
   # tdelta = datetime.strptime(s2, FMT) - datetime.strptime(s1, FMT)
-  # print(tdelta)
   
   # hours=sleep['sleep']-sleep['wake']
-  # print(hours)
-  # print(details)
-  # print(sleep)
+
   data=Times(date=sleep['date'], user_email=email, wake=sleep['wake'],sleep=sleep['sleep'], hours=hours)
-  if not Times.query.filter_by(date=sleep["date"]).first():
+  if not Times.query.filter_by(date=sleep["date"], user_email=email).first():
     db.session.add(data)
     db.session.commit()
   else:
@@ -308,15 +355,65 @@ def data():
 @app.route("/notes", methods=["POST"])
 def day():
   noted=(json.loads(request.data))
-  print(noted["note"])
-  note=Notes(user_id=3,week_id=3, note=noted["note"])
+  note=Notes(user_email=noted["email"], note=noted["note"])
   db.session.add(note)
   db.session.commit()
-  return{"response":"note saved"}
+  return{"message":"success"}
+
+@app.route("/notes/<user_email>", methods=["GET"])
+def day_get(user_email):
+  
+  notes=Notes.query.filter_by(user_email=user_email).all()
+  notes_info=[]
+  for line in notes:
+    notes_info.extend([line.note, line.id])
+  return{"notes": notes_info}
+
+@app.route("/notes/<user_email>/<id>", methods=["DELETE"])
+def note_delete(user_email=None, id=None):
+  notes=Notes.query.filter_by(user_email=user_email, id=id).delete()
+  db.session.commit()
+  return{"note": "note deleted"}
+
+
+@app.route("/tips/<user_email>/<id>", methods=["DELETE"])
+def tip_delete(user_email=None, id=None):
+  tips=User_tips.query.filter_by(user_email=user_email, tip_id=id).delete()
+  db.session.commit()
+  return{"notes": "tip deleted"}
 
 @app.route("/tips", methods=["GET"])
 def tips():
-  return{"tips"}
+  request=Tips.query.all()
+  tips=[]
+  for line in request:
+    tips.append([line.tip, line.source, line.link, line.id])
+  return {"tips":tips}
+
+
+@app.route("/savedtip", methods=["POST"])
+def save_tips():
+  pre_saved_tip=(json.loads(request.data))
+  saved_tips=pre_saved_tip["data"]
+
+  tip=User_tips(user_email=saved_tips["user_email"],tip_id=saved_tips["tip_id"])
+  db.session.add(tip)
+  db.session.commit()
+  return {"tips":"tip saved"}
+
+
+@app.route("/dashboardtip/<user_email>", methods=["GET"])
+def show_tips(user_email):
+  # user_email=request.query_string.decode()
+  # id=request.args['id'] /// if you want to pass as a query string
+
+  tipped=User_tips.query.filter_by(user_email=user_email).all()
+  tips_array=[]
+  for line in tipped:
+    tipdetails=Tips.query.filter_by(id=line.tip_id).first()
+    tips_array.append([tipdetails.tip, tipdetails.link, tipdetails.id])
+  return {"tips":tips_array}
+
 if __name__=="__main__":
   connect_to_db(app)
   print("connected to db")
