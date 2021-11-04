@@ -1,0 +1,1 @@
+  app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:HelloG1T@localhost:5432/lunardb'

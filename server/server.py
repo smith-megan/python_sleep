@@ -13,6 +13,7 @@ db=SQLAlchemy(app)
 
 
 def connect_to_db(app):
+  app.config['SQLALCHEMY_DATABASE_URI']
   app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
   # instantiate db
   db.app=app
