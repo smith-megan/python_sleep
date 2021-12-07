@@ -13,7 +13,6 @@ db=SQLAlchemy(app)
 
 
 def connect_to_db(app):
-  app.config['SQLALCHEMY_DATABASE_URI']
   app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
   # instantiate db
   db.app=app
@@ -328,12 +327,20 @@ def data():
 
   hours1, minutes1 = map(int, s1.split(':'))
   hours2, minutes2 = map(int, s2.split(':'))
-  t_a = datetime.datetime(2021, 10, 25, hours1, minutes1)
-  t_b = datetime.datetime(2021, 10, 25, hours2, minutes2)
+  if hours2 < hours1:
+    print(hours1, ":hours1", hours2,":hours2", "choice1")
+    t_a = datetime.datetime(2021, 10, 24, hours1, minutes1)
+    t_b = datetime.datetime(2021, 10, 24, hours2, minutes2)
 
-  difference=t_a-t_b
-  hours=difference.total_seconds()/60**2
-  
+    difference=t_a-t_b
+    hours=difference.total_seconds()/60**2
+  elif hours2 > hours1:
+    print(hours1, ":hours1", hours2,":hours2", "choice2")
+    t_a = datetime.datetime(2021, 10, 25, hours1, minutes1)
+    t_b = datetime.datetime(2021, 10, 24, hours2, minutes2)
+
+    difference=t_a-t_b
+    hours=difference.total_seconds()/60**2
   # now = datetime.datetime.now()
   # datetime.datetime(2020, 11, 3, 22, 57, 12, 300437)
   # yesterday = datetime.datetime(2020, 11, 3, 22, 57, 12, 300437)
@@ -343,7 +350,7 @@ def data():
   # tdelta = datetime.strptime(s2, FMT) - datetime.strptime(s1, FMT)
   
   # hours=sleep['sleep']-sleep['wake']
-
+  print(hours, 'these are the hours being recorded')
   data=Times(date=sleep['date'], user_email=email, wake=sleep['wake'],sleep=sleep['sleep'], hours=hours)
   if not Times.query.filter_by(date=sleep["date"], user_email=email).first():
     db.session.add(data)
